@@ -1,4 +1,4 @@
-import add from './index';
+import add from '~/index';
 
 describe('add', () => {
   it('will be success im happy!', () => {
