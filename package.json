@@ -20,14 +20,15 @@
         "subTaskConcurrency": 1,
         "linters": {
             "*.{ts,tsx}": [
-                "prettier --write",
-                "tslint",
+                "tslint --fix",
                 "git add"
             ]
         }
     },
     "peerDependencies": {},
-    "dependencies": {},
+    "dependencies": {
+        "tslib": "^1.9.0"
+    },
     "devDependencies": {
         "@types/jest": "^22.1.4",
         "@types/node": "^9.4.6",
