@@ -16,6 +16,7 @@
         "test:coverage": "npm run test -- --coverage",
         "lint": "tslint 'src/**/*.{ts,tsx}'",
         "fix": "npm run lint -- --fix",
+        "ts-node": "ts-node",
         "tsc": "tsc"
     },
     "lint-staged": {
