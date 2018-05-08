@@ -1,9 +1,10 @@
 {
-    "name": "npm-template-typescript",
+    "name": "playground-typescript",
     "version": "0.0.1",
     "main": "./dist/index.js",
     "types": "./dist/index.d.ts",
     "license": "MIT",
+    "private": true,
     "scripts": {
         "precommit": "lint-staged",
         "start": "cross-env NODE_ENV=development ts-node src/index.ts",
@@ -12,6 +13,7 @@
         "clean": "rimraf -g './dist' -g './src/**/*.{d.ts,js}'",
         "test": "cross-env NODE_ENV=test jest",
         "test:watch": "npm run test -- --watchAll",
+        "test:coverage": "npm run test -- --coverage",
         "lint": "tslint 'src/**/*.{ts,tsx}'",
         "fix": "npm run lint -- --fix",
         "tsc": "tsc"
