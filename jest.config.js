@@ -1,4 +1,5 @@
 module.exports = {
+  testURL: 'http://localhost',
   rootDir: 'src/',
   moduleFileExtensions: ['tsx', 'ts', 'js', 'json'],
   transform: {
