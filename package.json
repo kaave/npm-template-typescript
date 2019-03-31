@@ -14,7 +14,8 @@
     "test:watch": "npm run test -- --watchAll",
     "test:coverage": "npm run test -- --coverage",
     "lint": "eslint 'src/**/*.{js,ts,tsx}'",
-    "fix": "npm run lint -- --fix"
+    "fix": "npm run lint -- --fix",
+    "typecheck": "tsc --noEmit"
   },
   "lint-staged": {
     "subTaskConcurrency": 1,
