@@ -1,12 +1,5 @@
-function myFilter<T>(arr: T[], predicate: (val: T) => boolean): T[] {
-  const result = [];
-  for (const elm of arr) {
-    if (predicate(elm)) {
-      result.push(elm);
-    }
-  }
-  return result;
-}
+type Predicate<T> = (val: T) => boolean;
+const myFilter = <T>(arr: T[], predicate: Predicate<T>): T[] => arr.filter(predicate);
 
 // 使用例
 const res = myFilter([1, 2, 3, 4, 5], num => num % 2 === 0);
