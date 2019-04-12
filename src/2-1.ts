@@ -1,11 +1,12 @@
 export function myFilter<T>(arr: T[], predicate: (obj: T) => boolean) {
-  const result = [];
-  for (const elm of arr) {
-    if (predicate(elm)) {
-      result.push(elm);
-    }
-  }
-  return result;
+  return arr.filter(elm => predicate(elm));
+  // const result = [];
+  // for (const elm of arr) {
+  //   if (predicate(elm)) {
+  //     result.push(elm);
+  //   }
+  // }
+  // return result;
 }
 
 // 使用例
