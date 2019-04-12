@@ -14,4 +14,4 @@ const mailAddressLogger = (address: MailAddress) => console.log(address);
 
 const address = getMailAddress('mail@add.ress');
 mailAddressLogger(address);
-mailAddressLogger('');
+// mailAddressLogger('');
