@@ -1,6 +1,6 @@
-type Test = 'capture' | 'once' | 'passive';
+type EnableKeys = 'capture' | 'once' | 'passive';
 
-type ThirdVariable = boolean | { [key in keyof Test]: boolean };
+type ThirdVariable = boolean | { [key in EnableKeys]: boolean };
 
 declare function addEventListener(event: string, run: () => void, type?: ThirdVariable): void;
 

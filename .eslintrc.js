@@ -62,5 +62,7 @@ module.exports = {
     '@typescript-eslint/no-explicit-any': 'off',
     // requireを蹴る 無効化 global-requireって設定があるからいらん
     '@typescript-eslint/no-var-requires': 'off',
+    // interfaceで書けるtypeがあったら蹴る 無効化 時代の流れ
+    '@typescript-eslint/prefer-interface': 'off',
   },
 };
