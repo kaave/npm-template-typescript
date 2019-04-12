@@ -1,8 +1,6 @@
-type Speed = 'slow' | 'medium' | 'fast';
+type Speed2 = 'slow' | 'medium' | 'fast';
 
-// eslint-disable-next-line consistent-return
-function getSpeed(speed: Speed): number {
-  // eslint-disable-next-line default-case
+export function getSpeed(speed: Speed2): number {
   switch (speed) {
     case 'slow':
       return 10;
@@ -11,6 +9,7 @@ function getSpeed(speed: Speed): number {
     case 'fast':
       return 200;
   }
+  return 500;
 }
 
 // 使用例
@@ -19,4 +18,4 @@ const mediumSpeed = getSpeed('medium');
 const fastSpeed = getSpeed('fast');
 
 // エラー例
-// getSpeed('veryfast');
+getSpeed('veryfast');

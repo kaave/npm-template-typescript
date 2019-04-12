@@ -3,8 +3,8 @@ function sumOfPos(arr: number[]): number {
 }
 
 // 使用例
-const sum: number = sumOfPos([1, 3, -2, 0]);
+export const sum: number = sumOfPos([1, 3, -2, 0]);
 
-// // エラー例
-// sumOfPos(123, 456);
-// sumOfPos([123, "foobar"]);
+// エラー例
+sumOfPos(123, 456);
+sumOfPos([123, 'foobar']);
