@@ -1,4 +1,4 @@
-type MyPartial<T> = { [key in keyof T]: T[key] };
+type MyPartial<T> = { [key in keyof T]?: T[key] };
 
 // 使用例
 /*
