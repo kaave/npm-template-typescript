@@ -42,6 +42,7 @@ module.exports = {
   rules: {
     // クラスメンバーは改行で区切るが、1行の場合はスルー
     'lines-between-class-members': ['error', 'always', { exceptAfterSingleLine: true }],
+    'class-methods-use-this': 'off',
     // default exportを押す 無効化
     'import/prefer-default-export': 'off',
     // ~が機能しないため外す
@@ -95,5 +96,6 @@ module.exports = {
     '@typescript-eslint/no-var-requires': 'off',
     // interfaceでOKなものをtypeで書いてたら怒る 無効化 今っぽくない
     '@typescript-eslint/prefer-interface': 'off',
+    '@typescript-eslint/no-parameter-properties': 'off',
   },
 };
