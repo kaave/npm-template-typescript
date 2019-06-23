@@ -1,4 +1,4 @@
-import { injectable, inject } from 'tsyringe';
+import { injectable, inject, DependencyContainer } from 'tsyringe';
 
 import * as TicketRepository from './TicketRepository';
 
@@ -7,8 +7,10 @@ export interface IO {
 }
 
 @injectable()
-export class Impl implements IO {
-  constructor(@inject(TicketRepository.token) private ticketRepository: TicketRepository.IO) {
+class Impl implements IO {
+  ticketRepository: TicketRepository.IO;
+
+  constructor(@inject(TicketRepository.token) ticketRepository: TicketRepository.IO) {
     this.ticketRepository = ticketRepository;
   }
 
@@ -23,6 +25,6 @@ export class Impl implements IO {
   }
 }
 
-export function create(ticketRepository: TicketRepository.IO): IO {
-  return new Impl(ticketRepository);
+export function create(from: DependencyContainer) {
+  return from.resolve<IO>(Impl);
 }

@@ -1,3 +1,5 @@
+import { DependencyContainer } from 'tsyringe';
+
 export interface IO {
   getStock: () => number;
   setStock: (n: number) => void;
@@ -7,7 +9,7 @@ export const token = 'TicketRepository';
 
 let stock = 5;
 
-export class Impl implements IO {
+class Impl implements IO {
   getStock(): number {
     return stock;
   }
@@ -18,7 +20,7 @@ export class Impl implements IO {
 }
 
 let dummyStock = 10;
-export class DummyImpl implements IO {
+class DummyImpl implements IO {
   getStock(): number {
     return dummyStock;
   }
@@ -26,4 +28,8 @@ export class DummyImpl implements IO {
   setStock(newValue: number): void {
     dummyStock = newValue;
   }
+}
+
+export function regist(to: DependencyContainer, isDummy = false) {
+  to.register<IO>(token, { useClass: isDummy ? DummyImpl : Impl });
 }

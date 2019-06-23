@@ -96,6 +96,5 @@ module.exports = {
     '@typescript-eslint/no-var-requires': 'off',
     // interfaceでOKなものをtypeで書いてたら怒る 無効化 今っぽくない
     '@typescript-eslint/prefer-interface': 'off',
-    '@typescript-eslint/no-parameter-properties': 'off',
   },
 };
