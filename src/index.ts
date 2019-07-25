@@ -1,8 +1,8 @@
 import 'reflect-metadata';
 import { container } from 'tsyringe';
 
-import * as TicketRepository from './Ticket/TicketRepository';
-import * as TicketUseCase from './Ticket/TicketUseCase';
+import * as TicketRepository from '~/Ticket/TicketRepository';
+import * as TicketUseCase from '~/Ticket/TicketUseCase';
 
 TicketRepository.regist(container);
 
