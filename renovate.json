@@ -5,6 +5,7 @@
     "schedule": ["on sunday"],
     "minor": { "groupName": "all dependencies" },
     "patch": { "automerge": true },
+    "separateMinorPatch": true,
     "packageRules": [
         {
             "packagePatterns": ["^typescript$"],
