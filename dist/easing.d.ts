@@ -1,0 +1,33 @@
+import buildEasing from 'bezier-easing';
+export declare const ease: {
+    easeIn: buildEasing.EasingFunction;
+    easeOut: buildEasing.EasingFunction;
+    easeInOut: buildEasing.EasingFunction;
+    easeInQuad: buildEasing.EasingFunction;
+    easeOutQuad: buildEasing.EasingFunction;
+    easeInOutQuad: buildEasing.EasingFunction;
+    easeInCubic: buildEasing.EasingFunction;
+    easeOutCubic: buildEasing.EasingFunction;
+    easeInOutCubic: buildEasing.EasingFunction;
+    easeInQuart: buildEasing.EasingFunction;
+    easeOutQuart: buildEasing.EasingFunction;
+    easeInOutQuart: buildEasing.EasingFunction;
+    easeInQuint: buildEasing.EasingFunction;
+    easeOutQuint: buildEasing.EasingFunction;
+    easeInOutQuint: buildEasing.EasingFunction;
+    easeInExpo: buildEasing.EasingFunction;
+    easeOutExpo: buildEasing.EasingFunction;
+    easeInOutExpo: buildEasing.EasingFunction;
+    easeInCirc: buildEasing.EasingFunction;
+    easeOutCirc: buildEasing.EasingFunction;
+    easeInOutCirc: buildEasing.EasingFunction;
+    easeInBack: buildEasing.EasingFunction;
+    easeOutBack: buildEasing.EasingFunction;
+    easeInOutBack: buildEasing.EasingFunction;
+};
+export declare function range(start: number, end: number, step?: number): Generator<number, void>;
+export declare function createEaseFlipTimings({ easing, steps, msec, }: {
+    easing: keyof typeof ease | [number, number, number, number];
+    steps: number;
+    msec: number;
+}): number[];
