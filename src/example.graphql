@@ -1,0 +1,99 @@
+type Query {
+  totalPhotos: Int!
+  allPhotos: [Photo!]!
+  totalUsers: Int!
+  allUsers: [User!]!
+}
+
+schema {
+  query: Query
+}
+
+# ------------------------------------------------------------
+
+# 組み込みの型（スカラー型）は以下の5種類
+# Int     いつもの
+# Float   いつもの
+# String  いつもの
+# Boolean いつもの
+# ID      一意であることが保証された文字列 UUID でもただの文字列でも本当にユニークならOK
+
+# 自前の型は scalar 演算子で宣言
+"""
+日付型文字列
+"""
+scalar DateTime
+
+"""
+写真の種別
+"""
+enum PhotoCategory {
+  """
+  セルフィー
+  """
+  SELFIE
+  """
+  人物
+  """
+  PORTRAIT
+  """
+  なんかやっとる
+  """
+  ACTION
+  """
+  風景
+  """
+  LANDSCAPE
+  """
+  グラフィック
+  """
+  GRAPHIC
+}
+
+# ------------------------------------------------------------
+
+type User {
+  githubLogin: ID!
+  name: String
+  avatar: String
+  postedPhotos: [Photo!]!
+  inPhotos: [Photo!]!
+  friends: [FriendShip!]!
+}
+
+"""
+FriendShip は User と User の接続を表現するために使われている
+こういうのはスルー型と呼ぶ
+"""
+type FriendShip {
+  "友人関係をここで定義"
+  friends: [User!]!
+  howLong: Int!
+  whereWeMet: Location
+}
+
+type Photo {
+  id: ID!
+  name: String!
+  url: String!
+  """
+  nullable
+  """
+  description: String
+  """
+  scalar を使用
+  """
+  created: DateTime!
+  """
+  enum を使用
+  """
+  category: PhotoCategory!
+  postedBy: User!
+  taggedUsers: [User!]!
+}
+
+# リスト定義 下2つ以外はいらなくないか
+# [Int]   自身は     nullable 中身は     nullable
+# [Int!]  自身は     nullable 中身は non nullable
+# [Int]!  自身は non nullable 中身は     nullable
+# [Int!]! 自身は non nullable 中身は non nullable
