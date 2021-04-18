@@ -1,12 +1,32 @@
-type Query {
-  totalPhotos: Int!
-  allPhotos: [Photo!]!
-  totalUsers: Int!
-  allUsers: [User!]!
-}
+# ルート型として以下が存在する
+# query        参照系
+# mutation     更新系
+# subscription 監視系 ※ こんな呼び方をするかは知らない WebSocket でゴニョゴニョ系
 
 schema {
   query: Query
+  mutation: Mutation
+}
+
+#
+# query
+# 参照系 index も show も
+#
+
+type Query {
+  totalPhotos: Int!
+  # 引数が Optional なのでそういうこと
+  allPhotos(category: PhotoCategory): [Photo!]!
+  totalUsers: Int!
+  # ページングやるならこんな感じ
+  allUsers(first: Int = 50, start: Int = 0): [User!]!
+
+  """
+  いわゆるshow
+  PascalCase なの？
+  """
+  User(githubLogin: ID!): User!
+  Photo(id: ID!): Photo!
 }
 
 # ------------------------------------------------------------
@@ -16,14 +36,23 @@ schema {
 # Float   いつもの
 # String  いつもの
 # Boolean いつもの
-# ID      一意であることが保証された文字列 UUID でもただの文字列でも本当にユニークならOK
+# ID      一意であることが保証された文字列 UUID でもただの文字列でも実装でユニークが保証されていればOK
+
+# リスト定義 下2つ以外はいらなくないか
+# [Int]   自身は     nullable 中身は     nullable
+# [Int!]  自身は     nullable 中身は non nullable
+# [Int]!  自身は non nullable 中身は     nullable
+# [Int!]! 自身は non nullable 中身は non nullable
 
 # 自前の型は scalar 演算子で宣言
+# 実際の実装は resolver が頑張る
+# … んだけど、もうちょっとスキーマに意味を込めたい フォーマットとか、最大最小とか
 """
 日付型文字列
 """
 scalar DateTime
 
+# 列挙型 まあ昔ながらの
 """
 写真の種別
 """
@@ -52,11 +81,18 @@ enum PhotoCategory {
 
 # ------------------------------------------------------------
 
+# よくあるのを書く
+
 type User {
   githubLogin: ID!
   name: String
   avatar: String
-  postedPhotos: [Photo!]!
+  """
+  一対多の例
+  """
+  # 後述するクエリを使うとこんな感じ
+  # postedPhotos: [Photo!]!
+  postedPhotos(filter: PhotoFilter, paging: DatePage, sorting: DataSort): [Photo!]!
   inPhotos: [Photo!]!
   friends: [FriendShip!]!
 }
@@ -89,11 +125,118 @@ type Photo {
   """
   category: PhotoCategory!
   postedBy: User!
+  """
+  User は inPhotos や taggedPhotos を持っているので
+  多対多になっとる
+  """
   taggedUsers: [User!]!
 }
 
-# リスト定義 下2つ以外はいらなくないか
-# [Int]   自身は     nullable 中身は     nullable
-# [Int!]  自身は     nullable 中身は non nullable
-# [Int]!  自身は non nullable 中身は     nullable
-# [Int!]! 自身は non nullable 中身は non nullable
+# -------------------------------------------------
+# union と interface は異なる型が混在するケースに有効
+# union     はまったく異なる場合に
+# interface は共通のフィールドがある場合に
+# ...腹落ちしてませーん
+
+# それぞれ以下のように書く
+
+interface AgendaItem {
+  name: String!
+  start: DateTime!
+  end: DateTime!
+}
+
+type StudyGroup implements AgendaItem {
+  name: String!
+  start: DateTime!
+  end: DateTime!
+  participants: [User!]!
+  topic: String!
+}
+
+type Workout {
+  name: String!
+  start: DateTime!
+  end: DateTime!
+  reps: Int!
+}
+
+union AgendaItemUnion = StudyGroup | Workout
+
+# ホントは一箇所の Query にまとめないとだめ（多分）
+type Query {
+  agenda: [AgendaItem!]!
+  agendaCandidate: [AgendaItemUnion!]!
+}
+
+#
+# Mutation
+# 更新系 create, update, delete 全部これ
+# サービスに対してできることが Mutation となる
+#
+type Mutation {
+  # postPhoto(name: String!, description: String, category: PhotoCategory = PORTRAIT): Photo!
+  # せっかくなので入力型を使う
+  postPhoto(inputs: PostPhotoInput!): Photo!
+  # 後述する返却型も使う
+  githubAuth(code: String!): AuthPayload!
+}
+
+#
+# 入力型
+# TypeScript の type みたいな要領で引数専用の型
+# 気分は React の Props
+#
+input PostPhotoInput {
+  name: String!
+  description: String
+  category: PhotoCategory = PORTRAIT
+}
+
+# filter 条件や range などをまとめると威力を発揮する
+enum SortDirection {
+  ASC
+  DESC
+}
+
+enum SortablePhotoField {
+  name
+  description
+  category
+  created
+}
+
+input PhotoFilter {
+  category: PhotoCategory
+  createBetween: DateRange
+  taggedUsers: [ID!]
+  searchText: String
+}
+
+input DateRange {
+  start: DateTime!
+  end: DateTime!
+}
+
+input DatePage {
+  first: Int = 25
+  start: Int = 0
+}
+
+input DataSort {
+  sort: SortDirection = DESC
+  sortBy: SortablePhotoField = created
+}
+
+#
+# 返却型
+# 戻り値用の型
+#
+type AuthPayload {
+  user: User!
+  token: String!
+}
+
+#
+# Subscription は端折る なぜなら当面使う場面がないから
+#
