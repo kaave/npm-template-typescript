@@ -7,8 +7,20 @@ generates:
     plugins:
       - "typescript"
       - "typescript-resolvers"
+    config:
+      # enum を string literal types に変換する
+      enumsAsTypes: true
+      # 初っ端の import を import type に変更する
+      useTypeImports: true
+      # readonly をつけまくる
+      immutableTypes: true
+      # Maybe<T> の型定義を上書きする undefined も追加する
+      maybeValue: T | null | undefined
+      # Custom scalar
+      scalars:
+        # DateTime: string
+        DateTime: Date
   # ./graphql.schema.json:
   src/generated/graphql.schema.json:
     plugins:
       - "introspection"
-
