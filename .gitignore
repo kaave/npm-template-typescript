@@ -210,3 +210,4 @@ $RECYCLE.BIN/
 src/**/*.js
 src/**/*.d.ts
 dist/**/*.spec.*
+src/generated
