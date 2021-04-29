@@ -3,7 +3,7 @@ overwrite: true
 schema: "./src/typeDefs.graphql"
 documents: null
 generates:
-  src/generated/graphql.ts:
+  src/generated/resolvers.ts:
     plugins:
       - "typescript"
       - "typescript-resolvers"
@@ -24,3 +24,8 @@ generates:
   src/generated/graphql.schema.json:
     plugins:
       - "introspection"
+  src/generated/fragment-matcher.ts:
+    plugins:
+      - fragment-matcher
+    config:
+      useExplicitTyping: true
