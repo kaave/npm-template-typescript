@@ -4,7 +4,7 @@ jobs:
   build:
     working_directory: ~/kaave/playground-typescript
     docker:
-      - image: 'circleci/node:12'
+      - image: 'circleci/node:16'
     branches:
       only:
         - master
